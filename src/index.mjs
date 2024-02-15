@@ -41,11 +41,8 @@ app.post("/api/auth", (request, response) => {
 });
 
 app.get("/api/auth/status", (request, response) => {
-  request.sessionStore.get(request.sessionID, (err, session) => {
-    console.log(session);
-  });
-  return request.session.user
-    ? response.status(200).send(request.session.user)
+  return request.user
+    ? response.status(200).send(request.user)
     : response.status(401).send({ msg: "Not Authenticated" });
 });
 
