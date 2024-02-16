@@ -15,9 +15,9 @@ describe("create user and login", () => {
 
 	it("should create the user", async () => {
 		const response = await request(app).post("/api/users").send({
-			username: "Kratos",
+			username: "Jonas",
 			password: "password",
-			displayName: "Kratos God of War",
+			displayName: "Jonas the man",
 		});
 		expect(response.statusCode).toBe(201);
 	});
@@ -25,15 +25,15 @@ describe("create user and login", () => {
 	it("should log the user in and visit /api/auth/status and return auth user", async () => {
 		const response = await request(app)
 			.post("/api/auth")
-			.send({ username: "Kratos", password: "password" })
+			.send({ username: "Jonas", password: "password" })
 			.then((res) => {
 				return request(app)
 					.get("/api/auth/status")
 					.set("Cookie", res.headers["set-cookie"]);
 			});
 		expect(response.statusCode).toBe(200);
-		expect(response.body.username).toBe("Kratos");
-		expect(response.body.displayName).toBe("Kratos God of War");
+		expect(response.body.username).toBe("Jonas");
+		expect(response.body.displayName).toBe("Jonas the man");
 	});
 
 	afterAll(async () => {

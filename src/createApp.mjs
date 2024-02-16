@@ -7,6 +7,8 @@ import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import "./strategies/local-strategy.mjs";
 import { corsMiddleware } from './utils/middlewares.mjs';
+import { config } from "dotenv";
+config({ path: ".env.local" });
 // import "./strategies/discord-strategy.mjs";
 
 export function createApp() {
@@ -15,7 +17,7 @@ export function createApp() {
 	app.use(cookieParser("helloworld"));
 	app.use(
 		session({
-			secret: "anson the dev",
+			secret: process.env.SECRET,
 			saveUninitialized: true,
 			resave: false,
 			cookie: {
