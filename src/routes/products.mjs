@@ -1,14 +1,28 @@
 import { Router } from "express";
+import { check } from "express-validator";
+import { createProductHandler } from "../handlers/products.mjs";
+import { Product } from "../mongoose/schemas/products.mjs";
 
 const router = Router();
 
-router.get("/api/products", (request, response) => {
-	if (request.signedCookies.hello && request.signedCookies.hello === "world")
-		return response.send([{ id: 123, name: "chicken breast", price: 12.99 }]);
+router.get("/api/products", async (request, response) => {
+	try {
+	  const products = await Product.find();
+	  response.json(products);
+	} catch (error) {
+	  console.error(error);
+	  response.status(500).send("Internal Server Error");
+	}
+  });
 
-	return response
-		.status(403)
-		.send({ msg: "Sorry. You need the correct cookie" });
-});
+// POST /api/products
+router.post(
+    "/api/products",
+    [
+        check("title").notEmpty().withMessage("Title is required"),
+        check("description").notEmpty().withMessage("Description is required"),
+    ],
+    createProductHandler
+);
 
 export default router;

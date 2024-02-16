@@ -6,6 +6,7 @@ import passport from "passport";
 import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import "./strategies/local-strategy.mjs";
+import { corsMiddleware } from './utils/middlewares.mjs';
 // import "./strategies/discord-strategy.mjs";
 
 export function createApp() {
@@ -28,6 +29,8 @@ export function createApp() {
 
 	app.use(passport.initialize());
 	app.use(passport.session());
+
+	app.use(corsMiddleware);
 
 	app.use(routes);
 

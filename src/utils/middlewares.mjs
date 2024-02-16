@@ -1,4 +1,5 @@
 import { mockUsers } from "./constants.mjs";
+import cors from 'cors';
 
 export const resolveIndexByUserId = (request, response, next) => {
     const {
@@ -12,3 +13,5 @@ export const resolveIndexByUserId = (request, response, next) => {
     request.findUserIndex = findUserIndex;
     next();
   };
+
+ export const corsMiddleware = cors();
