@@ -25,4 +25,38 @@ router.post(
     createProductHandler
 );
 
+router.get("/api/products/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const product = await Product.findById(id);
+
+        if (!product) {
+            return res.status(404).send({ msg: "Product not found" });
+        }
+
+        res.json(product);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: "Internal Server Error" });
+    }
+});
+
+
+router.delete("/api/products/:id", async (req, res) => {
+	const { id } = req.params;
+   
+	try {
+	  const deletedProduct = await Product.findByIdAndDelete(id);
+   
+	  if (!deletedProduct) {
+		return res.status(404).send({ msg: "Product not found" });
+	  }
+   
+	  res.send({ msg: "Product deleted successfully" });
+	} catch (error) {
+	  res.status(500).send({ error: "Internal Server Error" });
+	}
+  });
+
 export default router;
