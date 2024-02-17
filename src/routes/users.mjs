@@ -40,6 +40,7 @@ router.patch("/api/users/:id", resolveIndexByUserId, (request, response) => {
 
 router.delete("/api/users/:id", resolveIndexByUserId, (request, response) => {
   const { findUserIndex } = request;
+  console.log(findUserIndex);
   mockUsers.splice(findUserIndex, 1);
   return response.sendStatus(200);
 });
