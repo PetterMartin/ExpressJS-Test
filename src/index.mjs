@@ -1,4 +1,3 @@
-import { mockUsers } from "./utils/constants.mjs";
 import { createApp } from "./createApp.mjs";
 import mongoose from "mongoose";
 import { config } from "dotenv";

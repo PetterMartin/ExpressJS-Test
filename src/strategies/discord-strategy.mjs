@@ -24,7 +24,7 @@ export default passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "https://express-hosting.onrender.com//api/auth/discord/redirect",
+      callbackURL: "http://localhost:3000/api/auth/discord/redirect",
       scope: ["identify"],
     },
     async (accessToken, refreshToken, profile, done) => {
