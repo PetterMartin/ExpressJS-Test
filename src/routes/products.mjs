@@ -42,6 +42,28 @@ router.get("/api/products/:id", async (req, res) => {
     }
 });
 
+router.patch("/api/products/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, description } = req.body;
+
+  try {
+      const updatedProduct = await Product.findByIdAndUpdate(
+          id,
+          { title, description },
+          { new: true }
+      );
+
+      if (!updatedProduct) {
+          return res.status(404).send({ msg: "Product not found" });
+      }
+
+      res.json(updatedProduct);
+  } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
 
 router.delete("/api/products/:id", async (req, res) => {
 	const { id } = req.params;
