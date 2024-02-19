@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { checkSchema } from "express-validator";
-import { mockUsers } from "../utils/constants.mjs";
 import { createUserValidationSchema } from "../utils/validationSchemas.mjs";
 import { resolveIndexByUserId } from "../utils/middlewares.mjs";
 import { createUserHandler, getUserByIdHandler } from "../handlers/users.mjs";
@@ -26,23 +25,66 @@ router.post(
   createUserHandler
 );
 
-router.put("/api/users/:id", resolveIndexByUserId, (request, response) => {
-  const { body, findUserIndex } = request;
-  mockUsers[findUserIndex] = { id: mockUsers[findUserIndex].id, ...body };
-  return response.sendStatus(200);
+router.put("/api/users/:id", resolveIndexByUserId, async (request, response) => {
+  const { id } = request.params;
+  const { body } = request;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      body,
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return response.status(404).send({ msg: "User not found" });
+    }
+
+    response.json(updatedUser);
+  } catch (error) {
+    console.error(error);
+    response.status(500).send({ error: "Internal Server Error" });
+  }
 });
 
-router.patch("/api/users/:id", resolveIndexByUserId, (request, response) => {
-  const { body, findUserIndex } = request;
-  mockUsers[findUserIndex] = { ...mockUsers[findUserIndex], ...body };
-  return response.sendStatus(200);
+router.patch("/api/users/:id", resolveIndexByUserId, async (request, response) => {
+  const { id } = request.params;
+  const { body } = request;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      body,
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return response.status(404).send({ msg: "User not found" });
+    }
+
+    response.json(updatedUser);
+  } catch (error) {
+    console.error(error);
+    response.status(500).send({ error: "Internal Server Error" });
+  }
 });
 
-router.delete("/api/users/:id", resolveIndexByUserId, (request, response) => {
-  const { findUserIndex } = request;
-  console.log(findUserIndex);
-  mockUsers.splice(findUserIndex, 1);
-  return response.sendStatus(200);
+router.delete("/api/users/:id", resolveIndexByUserId, async (request, response) => {
+  const { id } = request.params;
+
+  try {
+    const deletedUser = await User.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return response.status(404).send({ msg: "User not found" });
+    }
+
+    response.send({ msg: "User deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    response.status(500).send({ error: "Internal Server Error" });
+  }
 });
+
 
 export default router;
