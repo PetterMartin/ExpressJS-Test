@@ -17,7 +17,7 @@ router.get("/api/users", async (request, response) => {
   }
 });
 
-router.get("/api/users/:id", resolveIndexByUserId, async (request, response) => {
+router.get("/api/users/:id", async (request, response) => {
   const { id } = request.params;
 
   try {
@@ -40,7 +40,7 @@ router.post(
   createUserHandler
 );
 
-router.put("/api/users/:id", resolveIndexByUserId, async (request, response) => {
+router.put("/api/users/:id", async (request, response) => {
   const { id } = request.params;
   const { body } = request;
 
@@ -62,7 +62,7 @@ router.put("/api/users/:id", resolveIndexByUserId, async (request, response) => 
   }
 });
 
-router.patch("/api/users/:id", resolveIndexByUserId, async (request, response) => {
+router.patch("/api/users/:id", async (request, response) => {
   const { id } = request.params;
   const { body } = request;
 
@@ -84,7 +84,7 @@ router.patch("/api/users/:id", resolveIndexByUserId, async (request, response) =
   }
 });
 
-router.delete("/api/users/:id", resolveIndexByUserId, async (request, response) => {
+router.delete("/api/users/:id", async (request, response) => {
   const { id } = request.params;
 
   try {
