@@ -1,6 +1,8 @@
 import passport from "passport";
 import { Strategy } from "passport-discord";
+import { config } from "dotenv";
 import { DiscordUser } from "../mongoose/schemas/discord-user.mjs";
+config({ path: ".env.local" });
 
 passport.serializeUser((user, done) => {
   console.log(`Inside Serialize User`);
@@ -20,9 +22,9 @@ passport.deserializeUser(async (id, done) => {
 export default passport.use(
   new Strategy(
     {
-      clientID: "1206668140344516609",
-      clientSecret: "fZYvV6YauHphj_G5jCOYnDsrtZCUCaEF",
-      callbackURL: "http://localhost:3000/api/auth/discord/redirect",
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: "https://express-hosting.onrender.com//api/auth/discord/redirect",
       scope: ["identify"],
     },
     async (accessToken, refreshToken, profile, done) => {
