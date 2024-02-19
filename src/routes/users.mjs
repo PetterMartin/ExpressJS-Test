@@ -19,6 +19,23 @@ router.get("/api/users", async (request, response) => {
 
 router.get("/api/users/:id", resolveIndexByUserId, getUserByIdHandler);
 
+router.get("/api/users/:id", resolveIndexByUserId, async (request, response) => {
+  const { id } = request.params;
+
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return response.status(404).send({ msg: "User not found" });
+    }
+
+    response.json(user);
+  } catch (error) {
+    console.error(error);
+    response.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
 router.post(
   "/api/users",
   checkSchema(createUserValidationSchema),

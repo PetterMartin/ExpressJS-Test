@@ -2,7 +2,9 @@ ExpressJS-test
 
 - This is a project that allows you to manage products and users.
 
-# Endpoints
+URL: https://express-hosting.onrender.com/
+
+## Endpoints
 
 # Products
 GET /api/products
