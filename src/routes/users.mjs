@@ -17,8 +17,6 @@ router.get("/api/users", async (request, response) => {
   }
 });
 
-router.get("/api/users/:id", resolveIndexByUserId, getUserByIdHandler);
-
 router.get("/api/users/:id", resolveIndexByUserId, async (request, response) => {
   const { id } = request.params;
 
