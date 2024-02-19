@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { checkSchema } from "express-validator";
 import { createUserValidationSchema } from "../utils/validationSchemas.mjs";
-import { resolveIndexByUserId } from "../utils/middlewares.mjs";
 import { createUserHandler, getUserByIdHandler } from "../handlers/users.mjs";
 import { User } from "../mongoose/schemas/user.mjs";
 
