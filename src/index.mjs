@@ -16,7 +16,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Running on Port ${PORT}`);
 });
-
-// client_secret = fZYvV6YauHphj_G5jCOYnDsrtZCUCaEF
-// client_id = 1206668140344516609
-// redirect = http://localhost:3000/api/auth/discord/redirect
